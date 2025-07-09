@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "5ppNGpf3Hr4nHqM2fD+mZmLcNvc/wNSjG36ZmUAtTZs=",
+  "Source": "ExpenseTrackerCrudWebAPI",
+  "BasePath": "_content/ExpenseTrackerCrudWebAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

@@ -1,0 +1,6 @@
+@ExpenseTrackerCrudWebAPI_HostAddress = http://localhost:5287
+
+GET {{ExpenseTrackerCrudWebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
