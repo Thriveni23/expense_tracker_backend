@@ -1,90 +1,80 @@
-﻿using ExpenseTrackerCrudWebAPI.Database;
-using ExpenseTrackerCrudWebAPI.Models;
-using ExpenseTrackerAPI.Models;
+﻿using ExpenseTrackerCrudWebAPI.DTOs;
+using ExpenseTrackerCrudWebAPI.Interfaces;
+using ExpenseTrackerCrudWebAPI.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
-
 
 namespace ExpenseTrackerCrudWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class BudgetController : ControllerBase
     {
-        private readonly ExpenseTrackerDBContext _context;
+        private readonly IBudgetService _budgetService;
+        private readonly ILogger<BudgetController> _logger;
 
-        public BudgetController(ExpenseTrackerDBContext context)
+        public BudgetController(IBudgetService budgetService, ILogger<BudgetController> logger)
         {
-            _context = context;
+            _budgetService = budgetService;
+            _logger = logger;
         }
 
+        private string? GetUserId() =>
+            User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-        [HttpPost] 
-        [Authorize]
-        public async Task<IActionResult> CreateBudget(Budget budget)
+        [HttpPost]
+        public async Task<IActionResult> CreateBudget([FromBody] BudgetDTO budgetDto)
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            budget.UserId = userId;
+            var userId = GetUserId();
+            _logger.LogInformation("User {UserId} is creating a budget", userId);
 
-            _context.Budgets.Add(budget);
-            await _context.SaveChangesAsync();
-
-            return Ok(budget);
+            try
+            {
+                var createdBudget = await _budgetService.CreateBudgetAsync(userId, budgetDto);
+                _logger.LogInformation("Budget created successfully for user {UserId}", userId);
+                return Ok(createdBudget);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error creating budget for user {UserId}", userId);
+                return StatusCode(500, "An error occurred while creating the budget.");
+            }
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> GetAllBudgets()
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var budgets = await _context.Budgets
-                                .Where(i => i.UserId == userId)
-                                .ToListAsync();
-
-            return Ok(budgets);
+            var userId = GetUserId();
+            _logger.LogInformation("Fetching all budgets for user {UserId}", userId);
+            try
+            {
+                var budgets = await _budgetService.GetAllBudgetsAsync(userId);
+                return Ok(budgets);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching budgets for user {UserId}", userId);
+                return StatusCode(500, "An error occurred while fetching budgets.");
+            }
         }
 
         [HttpGet("current-summary")]
-        [Authorize]
         public async Task<IActionResult> GetCurrentMonthBudgetSummary()
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            var now = DateTime.Now;
-            string currentMonthYear = $"{now.Year}-{now.Month:D2}";  
-
-           
-            var budgets = await _context.Budgets
-                .Where(b => b.UserId == userId && b.MonthYear == currentMonthYear)
-                .ToListAsync();
-
-          
-            var expenses = await _context.Transactions
-                .Where(e => e.UserId == userId && e.Date.Year == now.Year && e.Date.Month == now.Month)
-                .GroupBy(e => e.Category)
-                .Select(g => new
-                {
-                    Category = g.Key,
-                    TotalSpent = g.Sum(e => e.Amount)
-                })
-                .ToListAsync();
-
-            
-            var summary = from b in budgets
-                          join e in expenses on b.Category equals e.Category into exp
-                          from e in exp.DefaultIfEmpty()
-                          select new BudgetSummary
-                          {
-                              Category = b.Category,
-                              Amount = b.Amount,
-                              Spent = e?.TotalSpent ?? 0,
-                              Remaining = b.Amount - (e?.TotalSpent ?? 0)
-                          };
-
-            return Ok(summary);
+            var userId = GetUserId();
+            _logger.LogInformation("Fetching current month budget summary for user {UserId}", userId);
+            try
+            {
+                var summary = await _budgetService.GetCurrentMonthBudgetSummaryAsync(userId);
+                return Ok(summary);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching current month summary for user {UserId}", userId);
+                return StatusCode(500, "An error occurred while fetching the summary.");
+            }
         }
     }
 }

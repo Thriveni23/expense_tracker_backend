@@ -1,14 +1,9 @@
-﻿using ExpenseTrackerCrudWebAPI.Database;
-using ExpenseTrackerCrudWebAPI.DTOs;
-using ExpenseTrackerCrudWebAPI.Models;
+﻿using ExpenseTrackerCrudWebAPI.DTOs;
+using ExpenseTrackerCrudWebAPI.Services;
+using ExpenseTrackerCrudWebAPI.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
 
 namespace ExpenseTrackerCrudWebAPI.Controllers
 {
@@ -16,129 +11,101 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly UserManager<User> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly IConfiguration _config;
-        private readonly ExpenseTrackerDBContext _context;
+        private readonly IAuthService _authService;
+        private readonly ILogger<AuthController> _logger;
 
-        public AuthController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration config,ExpenseTrackerDBContext context)
+        public AuthController(IAuthService authService, ILogger<AuthController> logger)
         {
-            _userManager = userManager;
-            _roleManager = roleManager;
-            _config = config;
-            _context = context;
+            _authService = authService;
+            _logger = logger;
         }
+
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDto dto)
         {
-            var user = new User
-            {
-                UserName = dto.Email,
-                Email = dto.Email,
-                FirstName = dto.FirstName,
-                LastName = dto.LastName,
-                PhoneNumber = dto.PhoneNumber
-            };
+            _logger.LogInformation("Registration attempt for email:{Email} with role:{Role}",dto.Email,dto.Role);
+            var result = await _authService.RegisterUserAsync(dto);
+            if (!result.Succeeded) {
+                _logger.LogWarning("Registration failed for email: {Email}. Errors: {Errors}", dto.Email, string.Join(", ", result.Errors.Select(e => e.Description)));
+                return BadRequest(new { errors = result.Errors.Select(e => e.Description) });
 
-            var result = await _userManager.CreateAsync(user, dto.Password);
-            if (!result.Succeeded)
-            {
-                var errors = result.Errors.Select(e => e.Description);
-                return BadRequest(new { errors });
             }
 
-            // Create role if it doesn't exist
-            if (!await _roleManager.RoleExistsAsync(dto.Role))
-                await _roleManager.CreateAsync(new IdentityRole(dto.Role));
-
-            await _userManager.AddToRoleAsync(user, dto.Role);
-
+            _logger.LogInformation("Registration successful for email: {Email} with role: {Role}", dto.Email, dto.Role);
             return Ok(new { message = $"Registered as {dto.Role}" });
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto dto)
         {
-            var user = await _userManager.FindByEmailAsync(dto.Email);
+            _logger.LogInformation("Login attempt for user: {Email}", dto.Email);
+            var response = await _authService.LoginUserAsync(dto);
 
-            if (user == null || !await _userManager.CheckPasswordAsync(user, dto.Password))
-                return Unauthorized(new { message = "Invalid credentials" });
-
-            var token = await GenerateJwtToken(user);
-          
-            var roles = await _userManager.GetRolesAsync(user);
-
-            return Ok(new { token, role = roles.FirstOrDefault() });
-        }
-
-
-        private async Task<string> GenerateJwtToken(User user)
-
-        {
-            var userRoles = await _userManager.GetRolesAsync(user);
-
-            var claims = new List<Claim>
+            if (response == null)
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(ClaimTypes.Role, userRoles.FirstOrDefault() ?? "User")
-            };
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var token = new JwtSecurityToken(
-                issuer: _config["Jwt:Issuer"],
-                audience: _config["Jwt:Audience"],
-                claims: claims,
-                expires: DateTime.UtcNow.AddHours(4),
-                signingCredentials: creds
-            );
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
+                _logger.LogWarning("Login failed for user: {Email}", dto.Email);
+                return Unauthorized(new { message = "Invalid email or password." });
+            }
+            _logger.LogInformation("Login successful for user: {Email}", dto.Email);
+            return Ok(new
+            {
+                token = response.AccessToken,
+                role = response.Role,
+                refreshToken = response.RefreshToken
+            });
         }
+
 
         [Authorize]
         [HttpPost("ChangePassword")]
         public async Task<IActionResult> ChangePassword(ChangePasswordDTO dto)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var user = await _userManager.FindByIdAsync(userId);
 
-            if (user == null)
-                return NotFound("User not found");
+            _logger.LogInformation("ChangePassword request received for userId: {UserId}", userId);
+            var result = await _authService.ChangePasswordAsync(userId, dto);
 
-            var result = await _userManager.ChangePasswordAsync(user, dto.CurrentPassword, dto.NewPassword);
             if (!result.Succeeded)
+            {
+                _logger.LogWarning("Failed to change password for userId: {UserId}. Errors: {Errors}",
+                 userId, string.Join(", ", result.Errors.Select(e => e.Description)));
                 return BadRequest(new { errors = result.Errors.Select(e => e.Description) });
+            }
+
+            _logger.LogInformation("Password changed successfully for userId: {UserId}", userId);
 
             return Ok(new { message = "Password changed successfully" });
         }
+
+        [HttpPost("refresh-token")]
+        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequestDto dto)
+        {
+            var result = await _authService.RefreshTokenAsync(dto);
+            if (result == null)
+                return Unauthorized(new { message = "Invalid refresh token" });
+
+            return Ok(result);
+        }
+
 
         [Authorize]
         [HttpDelete("DeleteAccount")]
         public async Task<IActionResult> DeleteAccount()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var user = await _userManager.FindByIdAsync(userId);
+            _logger.LogInformation("DeleteAccount request received for userId: {UserId}", userId);
+            var result = await _authService.DeleteAccountAsync(userId);
 
-            if (user == null)
-                return NotFound("User not found");
-
-            var result = await _userManager.DeleteAsync(user);
-            if (!result.Succeeded)
+            if (!result.Succeeded) {
+                _logger.LogWarning("Failed to delete account for userId: {UserId}. Errors: {Errors}",
+    userId, string.Join(", ", result.Errors.Select(e => e.Description)));
                 return BadRequest(new { errors = result.Errors.Select(e => e.Description) });
+            }
+
+            _logger.LogInformation("Account deleted successfully for userId: {UserId}", userId);
 
             return Ok(new { message = "Account deleted successfully" });
         }
-
-        // Only Admin can view all users
-        
-
-
-        // In AuthController.cs
-
-
     }
 }

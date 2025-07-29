@@ -1,111 +1,81 @@
-﻿
-using ExpenseTrackerCrudWebAPI.Database;
+﻿using ExpenseTrackerCrudWebAPI.Interfaces;
+using ExpenseTrackerCrudWebAPI.Services;
+using ExpenseTrackerCrudWebAPI.DTOs;
 using ExpenseTrackerCrudWebAPI.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using System.Threading.Tasks;
+using AutoWrapper.Wrappers;
 
 namespace ExpenseTrackerCrudWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class IncomesController : ControllerBase
     {
-        private readonly ExpenseTrackerDBContext _context;
+        private readonly IIncomeService _incomeService;
+        private readonly ILogger<IncomesController> _logger;
 
-        public IncomesController(ExpenseTrackerDBContext context)
+        public IncomesController(IIncomeService incomeService, ILogger<IncomesController> logger)
         {
-            _context = context;
+            _incomeService = incomeService;
+            _logger = logger;
         }
 
-
+        private string? GetUserId() => User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
         [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> CreateIncome(Income income)
+        public async Task<IActionResult> CreateIncome([FromBody] IncomeDTO incomeDto)
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var userId = GetUserId();
+            _logger.LogInformation("Creating income for user {UserId}", userId);
 
-            income.UserId = userId;
-
-            _context.Incomes.Add(income);
-            await _context.SaveChangesAsync();
-            return Ok(income);
+            try
+            {
+                var result = await _incomeService.CreateIncomeAsync(incomeDto, userId!);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error creating income");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
-       
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> GetAllIncomes()
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            var incomes = await _context.Incomes
-                                .Where(i => i.UserId == userId)
-                                .ToListAsync();
-            return Ok(incomes);
+            var userId = GetUserId();
+            var result = await _incomeService.GetAllIncomesAsync(userId!);
+            return Ok(result);
         }
 
-       
         [HttpGet("{id}")]
         public async Task<IActionResult> GetIncomeById(int id)
         {
-            var income = await _context.Incomes.FindAsync(id);
-            if (income == null)
-                return NotFound();
-
-            return Ok(income);
+            var result = await _incomeService.GetIncomeByIdAsync(id);
+            if (result == null) return NotFound();
+            return Ok(result);
         }
 
-        
         [HttpPut("{id}")]
-        [Authorize]
-        public async Task<IActionResult> UpdateIncome(int id, Income updatedIncome)
+        public async Task<IActionResult> UpdateIncome(int id, [FromBody] IncomeDTO incomeDto)
         {
-            if (id != updatedIncome.Id)
-                return BadRequest("Income ID mismatch.");
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            var existingIncome = await _context.Incomes.FindAsync(id);
-            if (existingIncome == null)
-                return NotFound();
-            if (existingIncome.UserId.ToString() != userId)
-                return Forbid("You are not allowed to update this income.");
-
-  
-            existingIncome.Date = updatedIncome.Date;
-            existingIncome.Description = updatedIncome.Description;
-            existingIncome.Amount = updatedIncome.Amount;
-            existingIncome.Source = updatedIncome.Source;
-
-            await _context.SaveChangesAsync();
-            return Ok(existingIncome);
+            var userId = GetUserId();
+            var result = await _incomeService.UpdateIncomeAsync(id, incomeDto, userId!);
+            if (result == null) return Forbid();
+            return Ok(result);
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
         public async Task<IActionResult> DeleteIncome(int id)
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var income= await _context.Incomes.FindAsync(id);
-
-
-
-            if (income == null)
-            {
-                return NotFound();
-            }
-            if (income.UserId.ToString() != userId)
-                return Forbid("You are not allowed to delete this income.");
-
-            _context.Incomes.Remove(income);
-            await _context.SaveChangesAsync();
-
-
-            return Ok(new { message = "Income deleted successfully." });
+            var userId = GetUserId();
+            var success = await _incomeService.DeleteIncomeAsync(id, userId!);
+            if (!success) return Forbid();
+            return Ok(new { message = "Income deleted successfully" });
         }
-
     }
 }

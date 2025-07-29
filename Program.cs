@@ -1,13 +1,30 @@
 using ExpenseTrackerCrudWebAPI.Database;
 using ExpenseTrackerCrudWebAPI.Models;
+using ExpenseTrackerCrudWebAPI.Exceptions;
+using ExpenseTrackerCrudWebAPI.Repositories;
+using ExpenseTrackerCrudWebAPI.Uow;
+using ExpenseTrackerCrudWebAPI.Interfaces;
+using ExpenseTrackerCrudWebAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using AutoWrapper;
+using Serilog;
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug() // Set logging level
+    .WriteTo.Console() // Log to Console
+    .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day) // Log to file
+    .CreateLogger();
+
+builder.Host.UseSerilog(); // Use Serilog instead of default logging
+
 
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
@@ -57,7 +74,10 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<GlobalExceptionFilter>();
+});
 
 
 builder.Services.AddCors(corsoptions =>
@@ -103,8 +123,35 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 builder.Services.AddAuthorization();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
+
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+builder.Services.AddScoped<IIncomeRepository, IncomeRepository>();
+builder.Services.AddScoped<ISavingGoalsRepository, SavingGoalsRepository>();
+builder.Services.AddScoped<ISourceRepository, SourceRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IBudgetRepository, BudgetRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ITransactionService, TransactionService>();
+builder.Services.AddScoped<IIncomeService, IncomeService>();
+builder.Services.AddScoped<ISavingGoalsService, SavingGoalsService>();
+
+builder.Services.AddScoped<ISourceService, SourceService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+
+builder.Services.AddScoped<IBudgetService, BudgetService>();
+
+
+builder.Services.AddAutoMapper(typeof(Program));
+
+
 
 var app = builder.Build();
+app.UseApiResponseAndExceptionWrapper();
+
+
 
 app.UseSwagger();
 app.UseSwaggerUI();

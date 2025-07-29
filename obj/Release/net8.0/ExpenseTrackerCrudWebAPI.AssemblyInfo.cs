@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ExpenseTrackerCrudWebAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7fcf5d0bcbc00ad1ee75da5eefcb6647959ab67b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0ed66c7912f28c0be4ac1cd5844757c76a3f9487")]
 [assembly: System.Reflection.AssemblyProductAttribute("ExpenseTrackerCrudWebAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ExpenseTrackerCrudWebAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

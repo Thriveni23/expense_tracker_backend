@@ -1,124 +1,155 @@
-﻿using ExpenseTrackerCrudWebAPI.Database;
-using ExpenseTrackerCrudWebAPI.Models;
+﻿using ExpenseTrackerCrudWebAPI.DTOs;
+using ExpenseTrackerCrudWebAPI.Interfaces;
+using ExpenseTrackerCrudWebAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace ExpenseTrackerCrudWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SavingGoalsController : ControllerBase
     {
-        private readonly ExpenseTrackerDBContext _context;
+        private readonly ISavingGoalsService _savingGoalsService;
+        private readonly ILogger<SavingGoalsController> _logger;
 
-        public SavingGoalsController(ExpenseTrackerDBContext context)
+        public SavingGoalsController(ISavingGoalsService savingGoalsService, ILogger<SavingGoalsController> logger)
         {
-            _context = context;
+            _savingGoalsService = savingGoalsService;
+            _logger = logger;
         }
 
- 
+        private string? GetUserId() =>
+            User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
         [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> CreateGoal(SavingGoals goal)
+        public async Task<IActionResult> CreateGoal([FromBody] SavingGoalDTO goalDto)
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            goal.UserId = userId;
+            var userId = GetUserId();
+            if (userId == null) return Unauthorized();
 
-            _context.SavingGoals.Add(goal);
-            await _context.SaveChangesAsync();
-
-            return Ok(goal);
+            _logger.LogInformation("Creating saving goal: {GoalName}", goalDto.GoalName);
+            try
+            {
+                var created = await _savingGoalsService.CreateGoalAsync(userId, goalDto);
+                return Ok(created);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error creating goal: {GoalName}", goalDto.GoalName);
+                return StatusCode(500, "An error occurred while creating the saving goal.");
+            }
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> GetAllGoals()
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var userId = GetUserId();
+            if (userId == null) return Unauthorized();
 
-            var goals = await _context.SavingGoals
-                                      .Where(g => g.UserId == userId)
-                                      .ToListAsync();
-
-            return Ok(goals);
+            _logger.LogInformation("Fetching all saving goals for user {UserId}", userId);
+            try
+            {
+                var goals = await _savingGoalsService.GetAllGoalsAsync(userId);
+                return Ok(goals);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching saving goals for user {UserId}", userId);
+                return StatusCode(500, "An error occurred while retrieving goals.");
+            }
         }
 
-      
         [HttpGet("{id}")]
-        [Authorize]
         public async Task<IActionResult> GetGoalById(int id)
         {
-            var goal = await _context.SavingGoals.FindAsync(id);
-            if (goal == null)
-                return NotFound();
-
-            return Ok(goal);
+            _logger.LogInformation("Fetching saving goal with ID {GoalId}", id);
+            try
+            {
+                var goal = await _savingGoalsService.GetGoalByIdAsync(id);
+                if (goal == null)
+                {
+                    _logger.LogWarning("Saving goal with ID {GoalId} not found", id);
+                    return NotFound();
+                }
+                return Ok(goal);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching saving goal with ID {GoalId}", id);
+                return StatusCode(500, "An error occurred while retrieving the goal.");
+            }
         }
 
         [HttpPut("{id}")]
-        [Authorize]
-        public async Task<IActionResult> UpdateGoal(int id, SavingGoals updatedGoal)
+        public async Task<IActionResult> UpdateGoal(int id, [FromBody] SavingGoalDTO updatedGoal)
         {
             if (id != updatedGoal.Id)
                 return BadRequest("Goal ID mismatch.");
 
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var userId = GetUserId();
+            if (userId == null) return Unauthorized();
 
-            var existingGoal = await _context.SavingGoals.FindAsync(id);
-            if (existingGoal == null)
-                return NotFound();
+            try
+            {
+                var updated = await _savingGoalsService.UpdateGoalAsync(userId, id, updatedGoal);
+                if (updated == null)
+                    return Forbid("Unauthorized or goal not found.");
 
-            if (existingGoal.UserId != userId)
-                return Forbid("You are not allowed to update this goal.");
-
-          
-            existingGoal.GoalName = updatedGoal.GoalName;
-            existingGoal.TargetAmount = updatedGoal.TargetAmount;
-            existingGoal.SavedAmount = updatedGoal.SavedAmount;
-
-            await _context.SaveChangesAsync();
-
-            return Ok(existingGoal);
+                return Ok(updated);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating saving goal with ID {GoalId}", id);
+                return StatusCode(500, "An error occurred while updating the goal.");
+            }
         }
 
         [HttpPut("addtosavings/{id}")]
-        [Authorize]
         public async Task<IActionResult> AddToSavings(int id, [FromBody] decimal amount)
         {
-            if (amount <= 0) return BadRequest();
+            if (amount <= 0)
+                return BadRequest("Amount must be greater than 0.");
 
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var goal = await _context.SavingGoals.FindAsync(id);
-            if (goal == null || goal.UserId != userId) return Unauthorized();
+            var userId = GetUserId();
+            if (userId == null) return Unauthorized();
 
-            goal.SavedAmount += amount;
-            await _context.SaveChangesAsync();
+            try
+            {
+                var updated = await _savingGoalsService.AddToSavingsAsync(userId, id, amount);
+                if (updated == null)
+                    return Forbid("Unauthorized or goal not found.");
 
-            return Ok(goal);
+                return Ok(updated);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error adding amount to saving goal {GoalId}", id);
+                return StatusCode(500, "An error occurred while adding to savings.");
+            }
         }
 
-
-       
-
         [HttpDelete("{id}")]
-        [Authorize]
         public async Task<IActionResult> DeleteGoal(int id)
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var userId = GetUserId();
+            if (userId == null) return Unauthorized();
 
-            var goal = await _context.SavingGoals.FindAsync(id);
-            if (goal == null)
-                return NotFound();
+            try
+            {
+                var result = await _savingGoalsService.DeleteGoalAsync(userId, id);
+                if (!result)
+                    return Forbid("Unauthorized or goal not found.");
 
-            if (goal.UserId != userId)
-                return Forbid("You are not allowed to delete this goal.");
-
-            _context.SavingGoals.Remove(goal);
-            await _context.SaveChangesAsync();
-
-            return Ok(new { message = "Saving goal deleted successfully." });
+                return Ok(new { message = "Goal deleted successfully." });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting saving goal with ID {GoalId}", id);
+                return StatusCode(500, "An error occurred while deleting the goal.");
+            }
         }
     }
 }

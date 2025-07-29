@@ -1,164 +1,115 @@
-﻿using ExpenseTrackerCrudWebAPI.Database;
-using ExpenseTrackerCrudWebAPI.DTOs;
-using ExpenseTrackerCrudWebAPI.Models;
+﻿using ExpenseTrackerCrudWebAPI.DTOs;
+using ExpenseTrackerCrudWebAPI.Services;
+using ExpenseTrackerCrudWebAPI.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseTrackerCrudWebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-   [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminController : ControllerBase
     {
-        private readonly ExpenseTrackerDBContext _context;
-        private readonly UserManager<User> _userManager;
+        private readonly IAdminService _adminService;
+        private readonly ILogger<AdminController> _logger;
 
-        public AdminController(ExpenseTrackerDBContext context, UserManager<User> userManager)
+        public AdminController(IAdminService adminService, ILogger<AdminController> logger)
         {
-            _context = context;
-            _userManager = userManager;
+            _adminService = adminService;
+            _logger = logger;
         }
 
-       
         [HttpGet("all-incomes")]
         public async Task<IActionResult> GetAllIncomes()
         {
-            var incomes = await _context.Incomes
-                .Include(i => i.User)
-                .Select(i => new
-                {
-                    i.Id,
-                    i.Source,
-                    i.Amount,
-                    i.Date,
-                    UserEmail = i.User.Email,
-                    UserFullName = i.User.FirstName + " " + i.User.LastName
-                })
-                .ToListAsync();
-
-            return Ok(incomes);
+            try
+            {
+                var incomes = await _adminService.GetAllIncomesAsync();
+                return Ok(incomes);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching all incomes");
+                return StatusCode(500, "Error fetching incomes");
+            }
         }
 
         [HttpGet("all-savings")]
         public async Task<IActionResult> GetAllSavings()
         {
-            var savings = await _context.SavingGoals
-                .Include(s => s.User)
-                .Select(s => new
-                {
-                    s.Id,
-                    s.GoalName,
-                    s.TargetAmount,
-                    s.SavedAmount,
-                    UserEmail = s.User.Email,
-                    UserFullName = s.User.FirstName + " " + s.User.LastName
-                })
-                .ToListAsync();
-
-            return Ok(savings);
+            try
+            {
+                var savings = await _adminService.GetAllSavingsAsync();
+                return Ok(savings);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching all savings");
+                return StatusCode(500, "Error fetching savings");
+            }
         }
-
 
         [HttpGet("all-budgets")]
         public async Task<IActionResult> GetAllBudgets()
         {
-            var budgets = await _context.Budgets
-                .Include(b => b.User)
-                .Select(b => new
-                {
-                    b.Id,
-                    b.Category,
-                    b.Amount,
-                    b.MonthYear,
-                    UserEmail = b.User.Email,
-                    UserFullName = b.User.FirstName + " " + b.User.LastName
-                })
-                .ToListAsync();
-
-            return Ok(budgets);
+            try
+            {
+                var budgets = await _adminService.GetAllBudgetsAsync();
+                return Ok(budgets);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching all budgets");
+                return StatusCode(500, "Error fetching budgets");
+            }
         }
 
         [HttpGet("all-transactions")]
         public async Task<IActionResult> GetAllTransactions()
         {
-            var transactions = await _context.Transactions
-                .Include(t => t.User)
-                .Select(t => new
-                {
-                    t.Id,
-                 
-                    t.Amount,
-                    t.Category,
-                    t.Description,
-                    t.Date,
-                    UserEmail = t.User.Email,
-                    UserFullName = t.User.FirstName + " " + t.User.LastName
-                })
-                .ToListAsync();
-
-            return Ok(transactions);
+            try
+            {
+                var transactions = await _adminService.GetAllTransactionsAsync();
+                return Ok(transactions);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching all transactions");
+                return StatusCode(500, "Error fetching transactions");
+            }
         }
-
 
         [HttpGet("all-users")]
-    
         public async Task<IActionResult> GetAllUsers()
         {
-            var users = _userManager.Users.ToList();
-
-            var userDtos = new List<UserDTO>();
-
-            foreach (var user in users)
+            try
             {
-                var roles = await _userManager.GetRolesAsync(user);
-                userDtos.Add(new UserDTO
-                {
-                    Id = user.Id,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    PhoneNumber = user.PhoneNumber,
-                    Role = roles.FirstOrDefault() ?? "User"
-                });
+                var users = await _adminService.GetAllUsersAsync();
+                return Ok(users);
             }
-
-            return Ok(userDtos);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching all users");
+                return StatusCode(500, "Error fetching users");
+            }
         }
-
 
         [HttpDelete("delete-user/{id}")]
         public async Task<IActionResult> DeleteUserById(string id)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            try
+            {
+                var deleted = await _adminService.DeleteUserByIdAsync(id);
+                if (!deleted) return NotFound(new { message = "User not found" });
 
-            if (user == null)
-                return NotFound(new { message = "User not found" });
-
-            var incomes = _context.Incomes.Where(i => i.UserId == id);
-            _context.Incomes.RemoveRange(incomes);
-
-            var expenses = _context.Transactions.Where(e => e.UserId == id);
-            _context.Transactions.RemoveRange(expenses);
-
-            var budgets = _context.Budgets.Where(e => e.UserId == id);
-            _context.Budgets.RemoveRange(budgets);
-
-            var savingGoals = _context.SavingGoals.Where(e => e.UserId == id);
-            _context.SavingGoals.RemoveRange(savingGoals);
-
-
-            var result = await _userManager.DeleteAsync(user);
-
-            if (!result.Succeeded)
-                return BadRequest(new { errors = result.Errors.Select(e => e.Description) });
-
-            return Ok(new { message = "User deleted successfully" });
+                return Ok(new { message = "User deleted successfully" });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting user with ID {UserId}", id);
+                return StatusCode(500, "Error deleting user");
+            }
         }
-
-
-
     }
 }

@@ -1,9 +1,8 @@
 ﻿namespace ExpenseTrackerCrudWebAPI.DTOs
 {
-    public class ChangePasswordDTO
+    public record ChangePasswordDTO
     {
-
-        public string CurrentPassword { get; set; }
-        public string NewPassword { get; set; }
+        public string CurrentPassword { get; init; }
+        public string NewPassword { get; init; }
     }
 }

@@ -7,10 +7,10 @@ namespace ExpenseTrackerCrudWebAPI.Models
         [Key]
         public int Id { get; set; }
 
-       
+        [Required]
         public string GoalName { get; set; } = string.Empty;
 
-      
+        [Required]
         public decimal TargetAmount { get; set; }
 
         public decimal SavedAmount { get; set; }

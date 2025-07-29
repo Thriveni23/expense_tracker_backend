@@ -1,9 +1,8 @@
-﻿using ExpenseTrackerCrudWebAPI.Database;
-using ExpenseTrackerCrudWebAPI.Models;
+﻿using ExpenseTrackerCrudWebAPI.DTOs;
+using ExpenseTrackerCrudWebAPI.Services;
+using ExpenseTrackerCrudWebAPI.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseTrackerCrudWebAPI.Controllers
 {
@@ -12,41 +11,64 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
     [Authorize]
     public class SourceController : ControllerBase
     {
-        private readonly ExpenseTrackerDBContext _context;
+        private readonly ISourceService _sourceService;
+        private readonly ILogger<SourceController> _logger;
 
-        public SourceController(ExpenseTrackerDBContext context)
+        public SourceController(ISourceService sourceService, ILogger<SourceController> logger)
         {
-            _context = context;
+            _sourceService = sourceService;
+            _logger = logger;
         }
 
-        // GET: api/Source
         [HttpGet]
         public async Task<IActionResult> GetSources()
         {
-            var sources = await _context.Sources.ToListAsync();
-            return Ok(sources);
+            _logger.LogInformation("Fetching all sources");
+            try
+            {
+                var sources = await _sourceService.GetSourcesAsync();
+                return Ok(sources);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching sources");
+                return StatusCode(500, "An error occurred while retrieving sources.");
+            }
         }
 
-        // POST: api/Source
         [HttpPost("add")]
-        public async Task<IActionResult> AddSource([FromBody] Source source)
+        public async Task<IActionResult> AddSource([FromBody] SourceDTO sourceDto)
         {
-            _context.Sources.Add(source);
-            await _context.SaveChangesAsync();
-            return Ok(source);
+            _logger.LogInformation("Adding new source: {SourceType}", sourceDto.SourceType);
+            try
+            {
+                var added = await _sourceService.AddSourceAsync(sourceDto);
+                return Ok(added);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error adding source: {SourceType}", sourceDto.SourceType);
+                return StatusCode(500, "An error occurred while adding the source.");
+            }
         }
 
-        // DELETE: api/Source/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSource(int id)
         {
-            var source = await _context.Sources.FindAsync(id);
-            if (source == null)
-                return NotFound();
+            _logger.LogInformation("Deleting source with ID: {SourceId}", id);
+            try
+            {
+                var deleted = await _sourceService.DeleteSourceAsync(id);
+                if (!deleted)
+                    return NotFound();
 
-            _context.Sources.Remove(source);
-            await _context.SaveChangesAsync();
-            return NoContent();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting source with ID {SourceId}", id);
+                return StatusCode(500, "An error occurred while deleting the source.");
+            }
         }
     }
 }

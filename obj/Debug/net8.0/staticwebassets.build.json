@@ -1,11 +1,1 @@
-{
-  "Version": 1,
-  "Hash": "5ppNGpf3Hr4nHqM2fD+mZmLcNvc/wNSjG36ZmUAtTZs=",
-  "Source": "ExpenseTrackerCrudWebAPI",
-  "BasePath": "_content/ExpenseTrackerCrudWebAPI",
-  "Mode": "Default",
-  "ManifestType": "Build",
-  "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
-}
+{"Version":1,"Hash":"msTrTWybBNNheHts0sqYW9x3oJsrYsLCaDGniZXHRSs=","Source":"ExpenseTrackerCrudWebAPI","BasePath":"_content/ExpenseTrackerCrudWebAPI","Mode":"Default","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}

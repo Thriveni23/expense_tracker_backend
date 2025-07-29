@@ -1,113 +1,120 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-
 using Microsoft.AspNetCore.Authorization;
-using ExpenseTrackerCrudWebAPI.Models;
 using System.Security.Claims;
-using ExpenseTrackerCrudWebAPI.Database;
-using ExpenseTrackerAPI.Models;
+using ExpenseTrackerCrudWebAPI.DTOs;
+using ExpenseTrackerCrudWebAPI.Interfaces;
+using ExpenseTrackerCrudWebAPI.Services;
+using AutoMapper;
 
-namespace ExpenseTrackerAPI.Controllers
+namespace ExpenseTrackerCrudWebAPI.Controllers
 {
-    
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TransactionsController : ControllerBase
     {
-        private readonly ExpenseTrackerDBContext _context;
+        private readonly ITransactionService _transactionService;
+        private readonly ILogger<TransactionsController> _logger;
 
-        public TransactionsController(ExpenseTrackerDBContext context)
+        public TransactionsController(ITransactionService transactionService, ILogger<TransactionsController> logger)
         {
-            _context = context;
+            _transactionService = transactionService;
+            _logger = logger;
         }
 
-
         [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> CreateTransaction([FromBody] Transaction transaction)
+        public async Task<IActionResult> CreateTransaction([FromBody] TransactionDTO transactionDto)
         {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value!;
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            transaction.UserId = userId;
+            _logger.LogInformation("User {UserId} is creating a transaction of amount {Amount} in category {Category}", userId, transactionDto.Amount, transactionDto.Category);
 
-            _context.Transactions.Add(transaction);
-            await _context.SaveChangesAsync();
+            try
+            {
 
-            return Ok(transaction);
+                var createdTransaction = await _transactionService.CreateTransactionAsync(transactionDto, userId);
+                return Ok(createdTransaction); // Already DTO
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error creating transaction for user {UserId}", userId);
+                return StatusCode(500, "An error occurred while creating the transaction.");
+            }
         }
 
-
-      
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> GetAllTransactions()
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            var transactions = await _context.Transactions
-                                .Where(i => i.UserId == userId)
-                                .ToListAsync();
-            return Ok(transactions);
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value!;
+            try
+            {
+                var transactions = await _transactionService.GetAllTransactionsAsync(userId);
+                return Ok(transactions); // Already a list of DTOs
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching transactions for user {UserId}", userId);
+                return StatusCode(500, "An error occurred while retrieving transactions.");
+            }
         }
 
-        
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTransactionById(int id)
         {
-            var transaction = await _context.Transactions.FindAsync(id);
-            if (transaction == null)
-                return NotFound();
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value!;
+            try
+            {
+                var transaction = await _transactionService.GetTransactionByIdAsync(id, userId);
+                if (transaction == null) return NotFound();
 
-            return Ok(transaction);
+                return Ok(transaction); // Already DTO
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching transaction with ID {TransactionId}", id);
+                return StatusCode(500, "An error occurred while retrieving the transaction.");
+            }
         }
 
-      
         [HttpPut("{id}")]
-        [Authorize]
-        public async Task<IActionResult> UpdateTransaction(int id, Transaction updatedTransaction)
+        public async Task<IActionResult> UpdateTransaction(int id, [FromBody] TransactionDTO transactionDto)
         {
-            if (id != updatedTransaction.Id)
-                return BadRequest("Transaction ID mismatch.");
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var existingTransaction = await _context.Transactions.FindAsync(id);
-            if (existingTransaction == null)
-                return NotFound();
-            if (existingTransaction.UserId.ToString() != userId)
-                return Forbid("You are not allowed to update this income.");
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value!;
+            try
+            {
+                var updatedTransaction = await _transactionService.UpdateTransactionAsync(id, transactionDto, userId);
+                if (updatedTransaction == null) return Forbid("You are not allowed to update this transaction or it does not exist.");
 
-           
-            existingTransaction.Date = updatedTransaction.Date;
-            existingTransaction.Description = updatedTransaction.Description;
-            existingTransaction.Amount = updatedTransaction.Amount;
-            existingTransaction.Category = updatedTransaction.Category;
-
-            await _context.SaveChangesAsync();
-            return Ok(existingTransaction);
+                return Ok(updatedTransaction); // Already DTO
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating transaction with ID {TransactionId}", id);
+                return StatusCode(500, "An error occurred while updating the transaction.");
+            }
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
         public async Task<IActionResult> DeleteTransaction(int id)
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var transaction = await _context.Transactions.FindAsync(id);
-
-            if (transaction == null)
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value!;
+            try
             {
-                return NotFound();
+                var success = await _transactionService.DeleteTransactionAsync(id, userId);
+                if (!success) return Forbid("You are not allowed to delete this transaction or it does not exist.");
+
+                return Ok(new { message = "Transaction deleted successfully." });
             }
-            if (transaction.UserId.ToString() != userId)
-                return Forbid("You are not allowed to delete this income.");
-
-            _context.Transactions.Remove(transaction);
-            await _context.SaveChangesAsync();
-
-           
-            return Ok(new { message = "Transaction deleted successfully." });
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting transaction with ID {TransactionId}", id);
+                return StatusCode(500, "An error occurred while deleting the transaction.");
+            }
         }
     }
 }

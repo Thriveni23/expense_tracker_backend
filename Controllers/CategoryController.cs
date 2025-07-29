@@ -1,9 +1,9 @@
-﻿using ExpenseTrackerCrudWebAPI.Database;
-using ExpenseTrackerCrudWebAPI.Models;
+﻿// Controllers/CategoryController.cs
+using ExpenseTrackerCrudWebAPI.DTOs;
+using ExpenseTrackerCrudWebAPI.Interfaces;
+using ExpenseTrackerCrudWebAPI.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseTrackerCrudWebAPI.Controllers
 {
@@ -12,41 +12,64 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
     [Authorize]
     public class CategoryController : ControllerBase
     {
-        private readonly ExpenseTrackerDBContext _context;
+        private readonly ICategoryService _categoryService;
+        private readonly ILogger<CategoryController> _logger;
 
-        public CategoryController(ExpenseTrackerDBContext context)
+        public CategoryController(ICategoryService categoryService, ILogger<CategoryController> logger)
         {
-            _context = context;
+            _categoryService = categoryService;
+            _logger = logger;
         }
 
-        // GET: api/Category
         [HttpGet]
         public async Task<IActionResult> GetCategories()
         {
-            var categories = await _context.Categories.ToListAsync();
-            return Ok(categories);
+            _logger.LogInformation("Fetching all categories");
+            try
+            {
+                var categories = await _categoryService.GetCategoriesAsync();
+                return Ok(categories);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while fetching categories");
+                return StatusCode(500, "An error occurred while retrieving categories.");
+            }
         }
 
-        // POST: api/Category
         [HttpPost("add")]
-        public async Task<IActionResult> AddCategory([FromBody] Category category)
+        public async Task<IActionResult> AddCategory([FromBody] CategoryDTO categoryDto)
         {
-            _context.Categories.Add(category);
-            await _context.SaveChangesAsync();
-            return Ok(category);
+            _logger.LogInformation("Adding new category: {CategoryType}", categoryDto.CategoryType);
+            try
+            {
+                var added = await _categoryService.AddCategoryAsync(categoryDto);
+                return Ok(added);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error adding category: {CategoryType}", categoryDto.CategoryType);
+                return StatusCode(500, "An error occurred while adding the category.");
+            }
         }
 
-        // DELETE: api/Category/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
-            if (category == null)
-                return NotFound();
+            _logger.LogInformation("Deleting category with ID: {CategoryId}", id);
+            try
+            {
+                var deleted = await _categoryService.DeleteCategoryAsync(id);
+                if (!deleted)
+                    return NotFound();
 
-            _context.Categories.Remove(category);
-            await _context.SaveChangesAsync();
-            return NoContent();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting category with ID {CategoryId}", id);
+                return StatusCode(500, "An error occurred while deleting the category.");
+            }
         }
     }
 }

@@ -1,0 +1,409 @@
+2025-07-26 13:02:33.304 +05:30 [DBG] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.TryParseModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
+2025-07-26 13:02:33.381 +05:30 [DBG] Hosting starting
+2025-07-26 13:02:33.406 +05:30 [INF] User profile is available. Using 'C:\Users\a2832850\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-07-26 13:02:33.416 +05:30 [DBG] Reading data from file 'C:\Users\a2832850\AppData\Local\ASP.NET\DataProtection-Keys\key-980d36b4-fabf-49d9-8a50-838f38fc286b.xml'.
+2025-07-26 13:02:33.424 +05:30 [DBG] Found key {980d36b4-fabf-49d9-8a50-838f38fc286b}.
+2025-07-26 13:02:33.432 +05:30 [DBG] Considering key {980d36b4-fabf-49d9-8a50-838f38fc286b} with expiration date 2025-10-12 06:55:38Z as default key.
+2025-07-26 13:02:33.436 +05:30 [DBG] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2025-07-26 13:02:33.440 +05:30 [DBG] Decrypting secret element using Windows DPAPI.
+2025-07-26 13:02:33.443 +05:30 [DBG] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2025-07-26 13:02:33.447 +05:30 [DBG] Opening CNG algorithm 'AES' from provider 'null' with chaining mode CBC.
+2025-07-26 13:02:33.450 +05:30 [DBG] Opening CNG algorithm 'SHA256' from provider 'null' with HMAC.
+2025-07-26 13:02:33.453 +05:30 [DBG] Using key {980d36b4-fabf-49d9-8a50-838f38fc286b} as the default key.
+2025-07-26 13:02:33.454 +05:30 [DBG] Key ring with default key {980d36b4-fabf-49d9-8a50-838f38fc286b} was loaded during application startup.
+2025-07-26 13:02:33.493 +05:30 [INF] Now listening on: http://localhost:5287
+2025-07-26 13:02:33.496 +05:30 [DBG] Loaded hosting startup assembly ExpenseTrackerCrudWebAPI
+2025-07-26 13:02:33.498 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2025-07-26 13:02:33.500 +05:30 [INF] Hosting environment: Development
+2025-07-26 13:02:33.502 +05:30 [INF] Content root path: C:\OneDrive - H&R BLOCK LTD\Desktop\ExpenseTracker\expense_tracker_backend
+2025-07-26 13:02:33.503 +05:30 [DBG] Hosting started
+2025-07-26 13:03:10.935 +05:30 [DBG] Connection id "0HNEC2QM5I1C1" accepted.
+2025-07-26 13:03:10.937 +05:30 [DBG] Connection id "0HNEC2QM5I1C1" started.
+2025-07-26 13:03:10.966 +05:30 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5287/api/SavingGoals - null null
+2025-07-26 13:03:10.972 +05:30 [DBG] Wildcard detected, all requests with hosts will be allowed.
+2025-07-26 13:03:10.994 +05:30 [DBG] 1 candidate(s) found for the request path '/api/SavingGoals'
+2025-07-26 13:03:10.997 +05:30 [DBG] Request matched endpoint '405 HTTP Method Not Supported'
+2025-07-26 13:03:11.020 +05:30 [DBG] Static files was skipped as the request already matched an endpoint.
+2025-07-26 13:03:11.045 +05:30 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2025-07-26 13:03:11.048 +05:30 [DBG] The request has an origin header: 'http://localhost:4200'.
+2025-07-26 13:03:11.050 +05:30 [INF] CORS policy execution successful.
+2025-07-26 13:03:11.052 +05:30 [DBG] The request is a preflight request.
+2025-07-26 13:03:11.068 +05:30 [INF] Source:[::1] Request: OPTIONS http localhost:5287/api/SavingGoals   Responded with [204] in 57ms
+2025-07-26 13:03:11.074 +05:30 [DBG] Connection id "0HNEC2QM5I1C1" completed keep alive response.
+2025-07-26 13:03:11.078 +05:30 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5287/api/SavingGoals - 204 null null 113.1305ms
+2025-07-26 13:03:11.085 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5287/api/SavingGoals - null null
+2025-07-26 13:03:11.090 +05:30 [DBG] 1 candidate(s) found for the request path '/api/SavingGoals'
+2025-07-26 13:03:11.094 +05:30 [DBG] Endpoint 'ExpenseTrackerCrudWebAPI.Controllers.SavingGoalsController.GetAllGoals (ExpenseTrackerCrudWebAPI)' with route pattern 'api/SavingGoals' is valid for the request path '/api/SavingGoals'
+2025-07-26 13:03:11.096 +05:30 [DBG] Request matched endpoint 'ExpenseTrackerCrudWebAPI.Controllers.SavingGoalsController.GetAllGoals (ExpenseTrackerCrudWebAPI)'
+2025-07-26 13:03:11.101 +05:30 [DBG] Static files was skipped as the request already matched an endpoint.
+2025-07-26 13:03:11.143 +05:30 [DBG] Successfully validated the token.
+2025-07-26 13:03:11.145 +05:30 [DBG] AuthenticationScheme: Bearer was successfully authenticated.
+2025-07-26 13:03:11.148 +05:30 [DBG] The request has an origin header: 'http://localhost:4200'.
+2025-07-26 13:03:11.149 +05:30 [INF] CORS policy execution successful.
+2025-07-26 13:03:11.154 +05:30 [DBG] Authorization was successful.
+2025-07-26 13:03:11.157 +05:30 [INF] Executing endpoint 'ExpenseTrackerCrudWebAPI.Controllers.SavingGoalsController.GetAllGoals (ExpenseTrackerCrudWebAPI)'
+2025-07-26 13:03:11.174 +05:30 [INF] Route matched with {action = "GetAllGoals", controller = "SavingGoals"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllGoals() on controller ExpenseTrackerCrudWebAPI.Controllers.SavingGoalsController (ExpenseTrackerCrudWebAPI).
+2025-07-26 13:03:11.178 +05:30 [DBG] Execution plan of authorization filters (in the following order): ["None"]
+2025-07-26 13:03:11.180 +05:30 [DBG] Execution plan of resource filters (in the following order): ["None"]
+2025-07-26 13:03:11.182 +05:30 [DBG] Execution plan of action filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)","Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+2025-07-26 13:03:11.185 +05:30 [DBG] Execution plan of exception filters (in the following order): ["None"]
+2025-07-26 13:03:11.188 +05:30 [DBG] Execution plan of result filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+2025-07-26 13:03:11.191 +05:30 [DBG] Executing controller factory for controller ExpenseTrackerCrudWebAPI.Controllers.SavingGoalsController (ExpenseTrackerCrudWebAPI)
+2025-07-26 13:03:11.254 +05:30 [DBG] An 'IServiceProvider' was created for internal use by Entity Framework.
+2025-07-26 13:03:11.270 +05:30 [DBG] Executed controller factory for controller ExpenseTrackerCrudWebAPI.Controllers.SavingGoalsController (ExpenseTrackerCrudWebAPI)
+2025-07-26 13:03:11.541 +05:30 [DBG] The index {'UserId'} was not created on entity type 'IdentityUserRole<string>' as the properties are already covered by the index {'UserId', 'RoleId'}.
+2025-07-26 13:03:11.544 +05:30 [DBG] The index {'UserId'} was not created on entity type 'IdentityUserToken<string>' as the properties are already covered by the index {'UserId', 'LoginProvider', 'Name'}.
+2025-07-26 13:03:11.653 +05:30 [WRN] No store type was specified for the decimal property 'Amount' on entity type 'Transaction'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-07-26 13:03:11.656 +05:30 [WRN] No store type was specified for the decimal property 'Amount' on entity type 'Budget'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-07-26 13:03:11.658 +05:30 [WRN] No store type was specified for the decimal property 'Amount' on entity type 'Income'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-07-26 13:03:11.661 +05:30 [WRN] No store type was specified for the decimal property 'SavedAmount' on entity type 'SavingGoals'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-07-26 13:03:11.663 +05:30 [WRN] No store type was specified for the decimal property 'TargetAmount' on entity type 'SavingGoals'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-07-26 13:03:11.711 +05:30 [DBG] Entity Framework Core 9.0.4 initialized 'ExpenseTrackerDBContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:9.0.4' with options: EngineType=SqlServer 
+2025-07-26 13:03:11.747 +05:30 [DBG] Compiling query expression: 
+'DbSet<SavingGoals>()
+    .Where(g => g.UserId == __userId_0)'
+2025-07-26 13:03:11.945 +05:30 [DBG] Generated query execution expression: 
+'queryContext => SingleQueryingEnumerable.Create<SavingGoals>(
+    relationalQueryContext: (RelationalQueryContext)queryContext, 
+    relationalCommandResolver: parameters => [LIFTABLE Constant: RelationalCommandCache.QueryExpression(
+        Projection Mapping:
+            EmptyProjectionMember -> Dictionary<IProperty, int> { [Property: SavingGoals.Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd, 0], [Property: SavingGoals.GoalName (string) Required, 1], [Property: SavingGoals.SavedAmount (decimal) Required, 2], [Property: SavingGoals.TargetAmount (decimal) Required, 3], [Property: SavingGoals.UserId (string) FK Index, 4] }
+        SELECT s.Id, s.GoalName, s.SavedAmount, s.TargetAmount, s.UserId
+        FROM SavingGoals AS s
+        WHERE s.UserId == @__userId_0) | Resolver: c => new RelationalCommandCache(
+        c.Dependencies.MemoryCache, 
+        c.RelationalDependencies.QuerySqlGeneratorFactory, 
+        c.RelationalDependencies.RelationalParameterBasedSqlProcessorFactory, 
+        Projection Mapping:
+            EmptyProjectionMember -> Dictionary<IProperty, int> { [Property: SavingGoals.Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd, 0], [Property: SavingGoals.GoalName (string) Required, 1], [Property: SavingGoals.SavedAmount (decimal) Required, 2], [Property: SavingGoals.TargetAmount (decimal) Required, 3], [Property: SavingGoals.UserId (string) FK Index, 4] }
+        SELECT s.Id, s.GoalName, s.SavedAmount, s.TargetAmount, s.UserId
+        FROM SavingGoals AS s
+        WHERE s.UserId == @__userId_0, 
+        False, 
+        new HashSet<string>(
+            new string[]{ }, 
+            StringComparer.Ordinal
+        )
+    )].GetRelationalCommandTemplate(parameters), 
+    readerColumns: null, 
+    shaper: (queryContext, dataReader, resultContext, resultCoordinator) => 
+    {
+        SavingGoals entity;
+        entity = 
+        {
+            MaterializationContext materializationContext1;
+            IEntityType entityType1;
+            SavingGoals instance1;
+            InternalEntityEntry entry1;
+            bool hasNullKey1;
+            materializationContext1 = new MaterializationContext(
+                [LIFTABLE Constant: ValueBuffer | Resolver: _ => (object)ValueBuffer.Empty], 
+                queryContext.Context
+            );
+            instance1 = default(SavingGoals);
+            entry1 = queryContext.TryGetEntry(
+                key: [LIFTABLE Constant: Key: SavingGoals.Id PK | Resolver: c => c.Dependencies.Model.FindEntityType("ExpenseTrackerCrudWebAPI.Models.SavingGoals").FindPrimaryKey()], 
+                keyValues: new object[]{ (object)dataReader.GetInt32(0) }, 
+                throwOnNullKey: True, 
+                hasNullKey: hasNullKey1);
+            !(hasNullKey1) ? entry1 != default(InternalEntityEntry) ? 
+            {
+                entityType1 = entry1.EntityType;
+                return instance1 = (SavingGoals)entry1.Entity;
+            } : 
+            {
+                ISnapshot shadowSnapshot1;
+                shadowSnapshot1 = [LIFTABLE Constant: Snapshot | Resolver: _ => Snapshot.Empty];
+                entityType1 = [LIFTABLE Constant: EntityType: SavingGoals | Resolver: namelessParameter{0} => namelessParameter{0}.Dependencies.Model.FindEntityType("ExpenseTrackerCrudWebAPI.Models.SavingGoals")];
+                instance1 = switch (entityType1)
+                {
+                    case [LIFTABLE Constant: EntityType: SavingGoals | Resolver: namelessParameter{1} => namelessParameter{1}.Dependencies.Model.FindEntityType("ExpenseTrackerCrudWebAPI.Models.SavingGoals")]: 
+                        {
+                            return 
+                            {
+                                SavingGoals instance;
+                                instance = new SavingGoals();
+                                instance.<Id>k__BackingField = dataReader.GetInt32(0);
+                                instance.<GoalName>k__BackingField = dataReader.GetString(1);
+                                instance.<SavedAmount>k__BackingField = dataReader.GetDecimal(2);
+                                instance.<TargetAmount>k__BackingField = dataReader.GetDecimal(3);
+                                instance.<UserId>k__BackingField = dataReader.IsDBNull(4) ? default(string) : dataReader.GetString(4);
+                                (instance is IInjectableService) ? ((IInjectableService)instance).Injected(
+                                    context: materializationContext1.Context, 
+                                    entity: instance, 
+                                    queryTrackingBehavior: TrackAll, 
+                                    structuralType: [LIFTABLE Constant: EntityType: SavingGoals | Resolver: namelessParameter{2} => namelessParameter{2}.Dependencies.Model.FindEntityType("ExpenseTrackerCrudWebAPI.Models.SavingGoals")]) : default(void);
+                                return instance;
+                            }}
+                    default: 
+                        default(SavingGoals)
+                }
+                ;
+                entry1 = entityType1 == default(IEntityType) ? default(InternalEntityEntry) : queryContext.StartTracking(
+                    entityType: entityType1, 
+                    entity: instance1, 
+                    snapshot: shadowSnapshot1);
+                return instance1;
+            } : default(void);
+            return instance1;
+        };
+        return entity;
+    }, 
+    contextType: ExpenseTrackerCrudWebAPI.Database.ExpenseTrackerDBContext, 
+    standAloneStateManager: False, 
+    detailedErrorsEnabled: False, 
+    threadSafetyChecksEnabled: True)'
+2025-07-26 13:03:11.978 +05:30 [DBG] Creating DbConnection.
+2025-07-26 13:03:11.992 +05:30 [DBG] Created DbConnection. (12ms).
+2025-07-26 13:03:11.996 +05:30 [DBG] Opening connection to database 'ExpenseTrackerDB' on server 'TRPRDP0ZH8WK-L\SQLEXPRESS'.
+2025-07-26 13:03:12.310 +05:30 [DBG] Opened connection to database 'ExpenseTrackerDB' on server 'TRPRDP0ZH8WK-L\SQLEXPRESS'.
+2025-07-26 13:03:12.314 +05:30 [DBG] Creating DbCommand for 'ExecuteReader'.
+2025-07-26 13:03:12.321 +05:30 [DBG] Created DbCommand for 'ExecuteReader' (4ms).
+2025-07-26 13:03:12.328 +05:30 [DBG] Initialized DbCommand for 'ExecuteReader' (14ms).
+2025-07-26 13:03:12.334 +05:30 [DBG] Executing DbCommand [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[GoalName], [s].[SavedAmount], [s].[TargetAmount], [s].[UserId]
+FROM [SavingGoals] AS [s]
+WHERE [s].[UserId] = @__userId_0
+2025-07-26 13:03:12.372 +05:30 [INF] Executed DbCommand (38ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[GoalName], [s].[SavedAmount], [s].[TargetAmount], [s].[UserId]
+FROM [SavingGoals] AS [s]
+WHERE [s].[UserId] = @__userId_0
+2025-07-26 13:03:12.384 +05:30 [DBG] Closing data reader to 'ExpenseTrackerDB' on server 'TRPRDP0ZH8WK-L\SQLEXPRESS'.
+2025-07-26 13:03:12.391 +05:30 [DBG] A data reader for 'ExpenseTrackerDB' on server 'TRPRDP0ZH8WK-L\SQLEXPRESS' is being disposed after spending 12ms reading results.
+2025-07-26 13:03:12.396 +05:30 [DBG] Closing connection to database 'ExpenseTrackerDB' on server 'TRPRDP0ZH8WK-L\SQLEXPRESS'.
+2025-07-26 13:03:12.401 +05:30 [DBG] Closed connection to database 'ExpenseTrackerDB' on server 'TRPRDP0ZH8WK-L\SQLEXPRESS' (5ms).
+2025-07-26 13:03:12.406 +05:30 [DBG] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
+2025-07-26 13:03:12.412 +05:30 [DBG] No information found on request to perform content negotiation.
+2025-07-26 13:03:12.413 +05:30 [DBG] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+2025-07-26 13:03:12.414 +05:30 [DBG] Attempting to select the first formatter in the output formatters list which can write the result.
+2025-07-26 13:03:12.416 +05:30 [DBG] Selected output formatter 'Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter' and content type 'application/json' to write the response.
+2025-07-26 13:03:12.418 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ExpenseTrackerCrudWebAPI.Models.SavingGoals, ExpenseTrackerCrudWebAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-07-26 13:03:12.472 +05:30 [INF] Executed action ExpenseTrackerCrudWebAPI.Controllers.SavingGoalsController.GetAllGoals (ExpenseTrackerCrudWebAPI) in 1280.2471ms
+2025-07-26 13:03:12.474 +05:30 [INF] Executed endpoint 'ExpenseTrackerCrudWebAPI.Controllers.SavingGoalsController.GetAllGoals (ExpenseTrackerCrudWebAPI)'
+2025-07-26 13:03:12.565 +05:30 [INF] Source:[::1] Request: GET http localhost:5287/api/SavingGoals   Responded with [200] in 1467ms
+2025-07-26 13:03:12.569 +05:30 [DBG] Connection id "0HNEC2QM5I1C1" completed keep alive response.
+2025-07-26 13:03:12.573 +05:30 [DBG] 'ExpenseTrackerDBContext' disposed.
+2025-07-26 13:03:12.577 +05:30 [DBG] Disposing connection to database 'ExpenseTrackerDB' on server 'TRPRDP0ZH8WK-L\SQLEXPRESS'.
+2025-07-26 13:03:12.580 +05:30 [DBG] Disposed connection to database '' on server '' (2ms).
+2025-07-26 13:03:12.583 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5287/api/SavingGoals - 200 61 application/json 1497.6667ms
+2025-07-26 13:03:28.017 +05:30 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5287/api/Auth/login - null null
+2025-07-26 13:03:28.022 +05:30 [DBG] 1 candidate(s) found for the request path '/api/Auth/login'
+2025-07-26 13:03:28.024 +05:30 [DBG] Request matched endpoint '405 HTTP Method Not Supported'
+2025-07-26 13:03:28.026 +05:30 [DBG] Static files was skipped as the request already matched an endpoint.
+2025-07-26 13:03:28.030 +05:30 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2025-07-26 13:03:28.032 +05:30 [DBG] The request has an origin header: 'http://localhost:4200'.
+2025-07-26 13:03:28.033 +05:30 [INF] CORS policy execution successful.
+2025-07-26 13:03:28.035 +05:30 [DBG] The request is a preflight request.
+2025-07-26 13:03:28.036 +05:30 [INF] Source:[::1] Request: OPTIONS http localhost:5287/api/Auth/login   Responded with [204] in 10ms
+2025-07-26 13:03:28.037 +05:30 [DBG] Connection id "0HNEC2QM5I1C1" completed keep alive response.
+2025-07-26 13:03:28.039 +05:30 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5287/api/Auth/login - 204 null null 21.2802ms
+2025-07-26 13:03:28.043 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5287/api/Auth/login - application/json 48
+2025-07-26 13:03:28.048 +05:30 [DBG] 1 candidate(s) found for the request path '/api/Auth/login'
+2025-07-26 13:03:28.050 +05:30 [DBG] Endpoint 'ExpenseTrackerCrudWebAPI.Controllers.AuthController.Login (ExpenseTrackerCrudWebAPI)' with route pattern 'api/Auth/login' is valid for the request path '/api/Auth/login'
+2025-07-26 13:03:28.052 +05:30 [DBG] Request matched endpoint 'ExpenseTrackerCrudWebAPI.Controllers.AuthController.Login (ExpenseTrackerCrudWebAPI)'
+2025-07-26 13:03:28.057 +05:30 [DBG] Connection id "0HNEC2QM5I1C1", Request id "0HNEC2QM5I1C1:00000004": started reading request body.
+2025-07-26 13:03:28.058 +05:30 [DBG] Connection id "0HNEC2QM5I1C1", Request id "0HNEC2QM5I1C1:00000004": done reading request body.
+2025-07-26 13:03:28.062 +05:30 [DBG] Static files was skipped as the request already matched an endpoint.
+2025-07-26 13:03:28.063 +05:30 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2025-07-26 13:03:28.064 +05:30 [DBG] The request has an origin header: 'http://localhost:4200'.
+2025-07-26 13:03:28.066 +05:30 [INF] CORS policy execution successful.
+2025-07-26 13:03:28.067 +05:30 [INF] Executing endpoint 'ExpenseTrackerCrudWebAPI.Controllers.AuthController.Login (ExpenseTrackerCrudWebAPI)'
+2025-07-26 13:03:28.075 +05:30 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(ExpenseTrackerCrudWebAPI.DTOs.LoginDto) on controller ExpenseTrackerCrudWebAPI.Controllers.AuthController (ExpenseTrackerCrudWebAPI).
+2025-07-26 13:03:28.078 +05:30 [DBG] Execution plan of authorization filters (in the following order): ["None"]
+2025-07-26 13:03:28.079 +05:30 [DBG] Execution plan of resource filters (in the following order): ["None"]
+2025-07-26 13:03:28.081 +05:30 [DBG] Execution plan of action filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)","Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+2025-07-26 13:03:28.084 +05:30 [DBG] Execution plan of exception filters (in the following order): ["None"]
+2025-07-26 13:03:28.086 +05:30 [DBG] Execution plan of result filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+2025-07-26 13:03:28.088 +05:30 [DBG] Executing controller factory for controller ExpenseTrackerCrudWebAPI.Controllers.AuthController (ExpenseTrackerCrudWebAPI)
+2025-07-26 13:03:28.149 +05:30 [INF] Executed action ExpenseTrackerCrudWebAPI.Controllers.AuthController.Login (ExpenseTrackerCrudWebAPI) in 60.5372ms
+2025-07-26 13:03:28.152 +05:30 [INF] Executed endpoint 'ExpenseTrackerCrudWebAPI.Controllers.AuthController.Login (ExpenseTrackerCrudWebAPI)'
+2025-07-26 13:03:28.156 +05:30 [ERR] [500]: Unhandled Exception occurred. Unable to process the request.
+System.InvalidOperationException: Unable to resolve service for type 'Microsoft.Extensions.Logging.ILogger' while attempting to activate 'ExpenseTrackerCrudWebAPI.Controllers.AuthController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.ThrowHelperUnableToResolveService(Type type, Type requiredBy)
+   at lambda_method53(Closure, IServiceProvider, Object[])
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass6_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AutoWrapper.Base.WrapperBase.InvokeAsyncBase(HttpContext context, AutoWrapperMembers awm)
+2025-07-26 13:03:28.192 +05:30 [INF] Source:[::1] Request: POST http localhost:5287/api/Auth/login  {"email":"user@gmail.com","password":"user@123"} Responded with [500] in 138ms
+2025-07-26 13:03:28.195 +05:30 [DBG] Connection id "0HNEC2QM5I1C1" completed keep alive response.
+2025-07-26 13:03:28.198 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5287/api/Auth/login - 500 143 application/json 154.1443ms
+2025-07-26 13:05:39.173 +05:30 [DBG] Connection id "0HNEC2QM5I1C1" disconnecting.
+2025-07-26 13:05:39.180 +05:30 [DBG] Connection id "0HNEC2QM5I1C1" stopped.
+2025-07-26 13:05:39.186 +05:30 [DBG] Connection id "0HNEC2QM5I1C1" sending FIN because: "The Socket transport's send loop completed gracefully."
+2025-07-26 13:06:04.468 +05:30 [DBG] Connection id "0HNEC2QM5I1C2" accepted.
+2025-07-26 13:06:04.470 +05:30 [DBG] Connection id "0HNEC2QM5I1C2" started.
+2025-07-26 13:06:04.472 +05:30 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5287/api/Auth/login - null null
+2025-07-26 13:06:04.478 +05:30 [DBG] 1 candidate(s) found for the request path '/api/Auth/login'
+2025-07-26 13:06:04.480 +05:30 [DBG] Request matched endpoint '405 HTTP Method Not Supported'
+2025-07-26 13:06:04.482 +05:30 [DBG] Static files was skipped as the request already matched an endpoint.
+2025-07-26 13:06:04.483 +05:30 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2025-07-26 13:06:04.485 +05:30 [DBG] The request has an origin header: 'http://localhost:4200'.
+2025-07-26 13:06:04.486 +05:30 [INF] CORS policy execution successful.
+2025-07-26 13:06:04.487 +05:30 [DBG] The request is a preflight request.
+2025-07-26 13:06:04.488 +05:30 [INF] Source:[::1] Request: OPTIONS http localhost:5287/api/Auth/login   Responded with [204] in 6ms
+2025-07-26 13:06:04.490 +05:30 [DBG] Connection id "0HNEC2QM5I1C2" completed keep alive response.
+2025-07-26 13:06:04.492 +05:30 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5287/api/Auth/login - 204 null null 19.4813ms
+2025-07-26 13:06:04.496 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5287/api/Auth/login - application/json 48
+2025-07-26 13:06:04.500 +05:30 [DBG] 1 candidate(s) found for the request path '/api/Auth/login'
+2025-07-26 13:06:04.501 +05:30 [DBG] Endpoint 'ExpenseTrackerCrudWebAPI.Controllers.AuthController.Login (ExpenseTrackerCrudWebAPI)' with route pattern 'api/Auth/login' is valid for the request path '/api/Auth/login'
+2025-07-26 13:06:04.503 +05:30 [DBG] Request matched endpoint 'ExpenseTrackerCrudWebAPI.Controllers.AuthController.Login (ExpenseTrackerCrudWebAPI)'
+2025-07-26 13:06:04.504 +05:30 [DBG] Connection id "0HNEC2QM5I1C2", Request id "0HNEC2QM5I1C2:00000002": started reading request body.
+2025-07-26 13:06:04.506 +05:30 [DBG] Connection id "0HNEC2QM5I1C2", Request id "0HNEC2QM5I1C2:00000002": done reading request body.
+2025-07-26 13:06:04.508 +05:30 [DBG] Static files was skipped as the request already matched an endpoint.
+2025-07-26 13:06:04.510 +05:30 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2025-07-26 13:06:04.512 +05:30 [DBG] The request has an origin header: 'http://localhost:4200'.
+2025-07-26 13:06:04.513 +05:30 [INF] CORS policy execution successful.
+2025-07-26 13:06:04.515 +05:30 [INF] Executing endpoint 'ExpenseTrackerCrudWebAPI.Controllers.AuthController.Login (ExpenseTrackerCrudWebAPI)'
+2025-07-26 13:06:04.516 +05:30 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(ExpenseTrackerCrudWebAPI.DTOs.LoginDto) on controller ExpenseTrackerCrudWebAPI.Controllers.AuthController (ExpenseTrackerCrudWebAPI).
+2025-07-26 13:06:04.518 +05:30 [DBG] Execution plan of authorization filters (in the following order): ["None"]
+2025-07-26 13:06:04.520 +05:30 [DBG] Execution plan of resource filters (in the following order): ["None"]
+2025-07-26 13:06:04.522 +05:30 [DBG] Execution plan of action filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)","Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+2025-07-26 13:06:04.524 +05:30 [DBG] Execution plan of exception filters (in the following order): ["None"]
+2025-07-26 13:06:04.526 +05:30 [DBG] Execution plan of result filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+2025-07-26 13:06:04.528 +05:30 [DBG] Executing controller factory for controller ExpenseTrackerCrudWebAPI.Controllers.AuthController (ExpenseTrackerCrudWebAPI)
+2025-07-26 13:06:04.534 +05:30 [INF] Executed action ExpenseTrackerCrudWebAPI.Controllers.AuthController.Login (ExpenseTrackerCrudWebAPI) in 5.823ms
+2025-07-26 13:06:04.536 +05:30 [INF] Executed endpoint 'ExpenseTrackerCrudWebAPI.Controllers.AuthController.Login (ExpenseTrackerCrudWebAPI)'
+2025-07-26 13:06:04.538 +05:30 [ERR] [500]: Unhandled Exception occurred. Unable to process the request.
+System.InvalidOperationException: Unable to resolve service for type 'Microsoft.Extensions.Logging.ILogger' while attempting to activate 'ExpenseTrackerCrudWebAPI.Controllers.AuthController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.ThrowHelperUnableToResolveService(Type type, Type requiredBy)
+   at lambda_method53(Closure, IServiceProvider, Object[])
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass6_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AutoWrapper.Base.WrapperBase.InvokeAsyncBase(HttpContext context, AutoWrapperMembers awm)
+2025-07-26 13:06:04.545 +05:30 [INF] Source:[::1] Request: POST http localhost:5287/api/Auth/login  {"email":"user@gmail.com","password":"user@123"} Responded with [500] in 40ms
+2025-07-26 13:06:04.547 +05:30 [DBG] Connection id "0HNEC2QM5I1C2" completed keep alive response.
+2025-07-26 13:06:04.549 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5287/api/Auth/login - 500 143 application/json 52.1853ms
+2025-07-26 13:07:36.312 +05:30 [DBG] Connection id "0HNEC2QM5I1C2" received FIN.
+2025-07-26 13:07:36.313 +05:30 [DBG] Connection id "0HNEC2QM5I1C2" disconnecting.
+2025-07-26 13:07:36.315 +05:30 [DBG] Connection id "0HNEC2QM5I1C2" stopped.
+2025-07-26 13:07:37.684 +05:30 [DBG] Connection id "0HNEC2QM5I1C2" sending FIN because: "The Socket transport's send loop completed gracefully."
+2025-07-26 13:54:19.529 +05:30 [DBG] Connection id "0HNEC2QM5I1C3" accepted.
+2025-07-26 13:54:19.533 +05:30 [DBG] Connection id "0HNEC2QM5I1C3" started.
+2025-07-26 13:54:19.535 +05:30 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5287/api/Auth/login - null null
+2025-07-26 13:54:19.542 +05:30 [DBG] 1 candidate(s) found for the request path '/api/Auth/login'
+2025-07-26 13:54:19.545 +05:30 [DBG] Request matched endpoint '405 HTTP Method Not Supported'
+2025-07-26 13:54:19.546 +05:30 [DBG] Static files was skipped as the request already matched an endpoint.
+2025-07-26 13:54:19.548 +05:30 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2025-07-26 13:54:19.550 +05:30 [DBG] The request has an origin header: 'http://localhost:4200'.
+2025-07-26 13:54:19.551 +05:30 [INF] CORS policy execution successful.
+2025-07-26 13:54:19.552 +05:30 [DBG] The request is a preflight request.
+2025-07-26 13:54:19.554 +05:30 [INF] Source:[::1] Request: OPTIONS http localhost:5287/api/Auth/login   Responded with [204] in 7ms
+2025-07-26 13:54:19.556 +05:30 [DBG] Connection id "0HNEC2QM5I1C3" completed keep alive response.
+2025-07-26 13:54:19.558 +05:30 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5287/api/Auth/login - 204 null null 23.2003ms
+2025-07-26 13:54:19.563 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5287/api/Auth/login - application/json 48
+2025-07-26 13:54:19.566 +05:30 [DBG] 1 candidate(s) found for the request path '/api/Auth/login'
+2025-07-26 13:54:19.568 +05:30 [DBG] Endpoint 'ExpenseTrackerCrudWebAPI.Controllers.AuthController.Login (ExpenseTrackerCrudWebAPI)' with route pattern 'api/Auth/login' is valid for the request path '/api/Auth/login'
+2025-07-26 13:54:19.570 +05:30 [DBG] Request matched endpoint 'ExpenseTrackerCrudWebAPI.Controllers.AuthController.Login (ExpenseTrackerCrudWebAPI)'
+2025-07-26 13:54:19.572 +05:30 [DBG] Connection id "0HNEC2QM5I1C3", Request id "0HNEC2QM5I1C3:00000002": started reading request body.
+2025-07-26 13:54:19.575 +05:30 [DBG] Connection id "0HNEC2QM5I1C3", Request id "0HNEC2QM5I1C3:00000002": done reading request body.
+2025-07-26 13:54:19.577 +05:30 [DBG] Static files was skipped as the request already matched an endpoint.
+2025-07-26 13:54:19.578 +05:30 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2025-07-26 13:54:19.579 +05:30 [DBG] The request has an origin header: 'http://localhost:4200'.
+2025-07-26 13:54:19.581 +05:30 [INF] CORS policy execution successful.
+2025-07-26 13:54:19.582 +05:30 [INF] Executing endpoint 'ExpenseTrackerCrudWebAPI.Controllers.AuthController.Login (ExpenseTrackerCrudWebAPI)'
+2025-07-26 13:54:19.583 +05:30 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(ExpenseTrackerCrudWebAPI.DTOs.LoginDto) on controller ExpenseTrackerCrudWebAPI.Controllers.AuthController (ExpenseTrackerCrudWebAPI).
+2025-07-26 13:54:19.586 +05:30 [DBG] Execution plan of authorization filters (in the following order): ["None"]
+2025-07-26 13:54:19.588 +05:30 [DBG] Execution plan of resource filters (in the following order): ["None"]
+2025-07-26 13:54:19.591 +05:30 [DBG] Execution plan of action filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)","Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+2025-07-26 13:54:19.593 +05:30 [DBG] Execution plan of exception filters (in the following order): ["None"]
+2025-07-26 13:54:19.595 +05:30 [DBG] Execution plan of result filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+2025-07-26 13:54:19.597 +05:30 [DBG] Executing controller factory for controller ExpenseTrackerCrudWebAPI.Controllers.AuthController (ExpenseTrackerCrudWebAPI)
+2025-07-26 13:54:19.610 +05:30 [INF] Executed action ExpenseTrackerCrudWebAPI.Controllers.AuthController.Login (ExpenseTrackerCrudWebAPI) in 12.9551ms
+2025-07-26 13:54:19.612 +05:30 [INF] Executed endpoint 'ExpenseTrackerCrudWebAPI.Controllers.AuthController.Login (ExpenseTrackerCrudWebAPI)'
+2025-07-26 13:54:19.614 +05:30 [ERR] [500]: Unhandled Exception occurred. Unable to process the request.
+System.InvalidOperationException: Unable to resolve service for type 'Microsoft.Extensions.Logging.ILogger' while attempting to activate 'ExpenseTrackerCrudWebAPI.Controllers.AuthController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.ThrowHelperUnableToResolveService(Type type, Type requiredBy)
+   at lambda_method53(Closure, IServiceProvider, Object[])
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass6_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AutoWrapper.Base.WrapperBase.InvokeAsyncBase(HttpContext context, AutoWrapperMembers awm)
+2025-07-26 13:54:19.621 +05:30 [INF] Source:[::1] Request: POST http localhost:5287/api/Auth/login  {"email":"user@gmail.com","password":"user@123"} Responded with [500] in 49ms
+2025-07-26 13:54:19.624 +05:30 [DBG] Connection id "0HNEC2QM5I1C3" completed keep alive response.
+2025-07-26 13:54:19.627 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5287/api/Auth/login - 500 143 application/json 63.6047ms
+2025-07-26 13:54:25.943 +05:30 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5287/api/Auth/login - null null
+2025-07-26 13:54:25.948 +05:30 [DBG] 1 candidate(s) found for the request path '/api/Auth/login'
+2025-07-26 13:54:25.950 +05:30 [DBG] Request matched endpoint '405 HTTP Method Not Supported'
+2025-07-26 13:54:25.952 +05:30 [DBG] Static files was skipped as the request already matched an endpoint.
+2025-07-26 13:54:25.953 +05:30 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2025-07-26 13:54:25.956 +05:30 [DBG] The request has an origin header: 'http://localhost:4200'.
+2025-07-26 13:54:25.957 +05:30 [INF] CORS policy execution successful.
+2025-07-26 13:54:25.959 +05:30 [DBG] The request is a preflight request.
+2025-07-26 13:54:25.960 +05:30 [INF] Source:[::1] Request: OPTIONS http localhost:5287/api/Auth/login   Responded with [204] in 8ms
+2025-07-26 13:54:25.962 +05:30 [DBG] Connection id "0HNEC2QM5I1C3" completed keep alive response.
+2025-07-26 13:54:25.963 +05:30 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5287/api/Auth/login - 204 null null 20.4172ms
+2025-07-26 13:54:25.968 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5287/api/Auth/login - application/json 48
+2025-07-26 13:54:25.972 +05:30 [DBG] 1 candidate(s) found for the request path '/api/Auth/login'
+2025-07-26 13:54:25.973 +05:30 [DBG] Endpoint 'ExpenseTrackerCrudWebAPI.Controllers.AuthController.Login (ExpenseTrackerCrudWebAPI)' with route pattern 'api/Auth/login' is valid for the request path '/api/Auth/login'
+2025-07-26 13:54:25.976 +05:30 [DBG] Request matched endpoint 'ExpenseTrackerCrudWebAPI.Controllers.AuthController.Login (ExpenseTrackerCrudWebAPI)'
+2025-07-26 13:54:25.977 +05:30 [DBG] Connection id "0HNEC2QM5I1C3", Request id "0HNEC2QM5I1C3:00000004": started reading request body.
+2025-07-26 13:54:25.979 +05:30 [DBG] Connection id "0HNEC2QM5I1C3", Request id "0HNEC2QM5I1C3:00000004": done reading request body.
+2025-07-26 13:54:25.980 +05:30 [DBG] Static files was skipped as the request already matched an endpoint.
+2025-07-26 13:54:25.981 +05:30 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2025-07-26 13:54:25.983 +05:30 [DBG] The request has an origin header: 'http://localhost:4200'.
+2025-07-26 13:54:25.984 +05:30 [INF] CORS policy execution successful.
+2025-07-26 13:54:25.985 +05:30 [INF] Executing endpoint 'ExpenseTrackerCrudWebAPI.Controllers.AuthController.Login (ExpenseTrackerCrudWebAPI)'
+2025-07-26 13:54:25.987 +05:30 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(ExpenseTrackerCrudWebAPI.DTOs.LoginDto) on controller ExpenseTrackerCrudWebAPI.Controllers.AuthController (ExpenseTrackerCrudWebAPI).
+2025-07-26 13:54:25.989 +05:30 [DBG] Execution plan of authorization filters (in the following order): ["None"]
+2025-07-26 13:54:25.991 +05:30 [DBG] Execution plan of resource filters (in the following order): ["None"]
+2025-07-26 13:54:25.993 +05:30 [DBG] Execution plan of action filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)","Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+2025-07-26 13:54:25.995 +05:30 [DBG] Execution plan of exception filters (in the following order): ["None"]
+2025-07-26 13:54:25.997 +05:30 [DBG] Execution plan of result filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+2025-07-26 13:54:25.998 +05:30 [DBG] Executing controller factory for controller ExpenseTrackerCrudWebAPI.Controllers.AuthController (ExpenseTrackerCrudWebAPI)
+2025-07-26 13:54:26.001 +05:30 [INF] Executed action ExpenseTrackerCrudWebAPI.Controllers.AuthController.Login (ExpenseTrackerCrudWebAPI) in 2.3306ms
+2025-07-26 13:54:26.003 +05:30 [INF] Executed endpoint 'ExpenseTrackerCrudWebAPI.Controllers.AuthController.Login (ExpenseTrackerCrudWebAPI)'
+2025-07-26 13:54:26.005 +05:30 [ERR] [500]: Unhandled Exception occurred. Unable to process the request.
+System.InvalidOperationException: Unable to resolve service for type 'Microsoft.Extensions.Logging.ILogger' while attempting to activate 'ExpenseTrackerCrudWebAPI.Controllers.AuthController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.ThrowHelperUnableToResolveService(Type type, Type requiredBy)
+   at lambda_method53(Closure, IServiceProvider, Object[])
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass6_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AutoWrapper.Base.WrapperBase.InvokeAsyncBase(HttpContext context, AutoWrapperMembers awm)
+2025-07-26 13:54:26.010 +05:30 [INF] Source:[::1] Request: POST http localhost:5287/api/Auth/login  {"email":"user@gmail.com","password":"user@123"} Responded with [500] in 32ms
+2025-07-26 13:54:26.012 +05:30 [DBG] Connection id "0HNEC2QM5I1C3" completed keep alive response.
+2025-07-26 13:54:26.013 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5287/api/Auth/login - 500 143 application/json 45.3569ms
+2025-07-26 13:54:43.651 +05:30 [INF] Application is shutting down...
+2025-07-26 13:54:43.653 +05:30 [DBG] Hosting stopping
+2025-07-26 13:54:43.658 +05:30 [DBG] Connection id "0HNEC2QM5I1C3" disconnecting.
+2025-07-26 13:54:43.661 +05:30 [DBG] Connection id "0HNEC2QM5I1C3" stopped.
+2025-07-26 13:54:43.664 +05:30 [DBG] Connection id "0HNEC2QM5I1C3" sending FIN because: "The Socket transport's send loop completed gracefully."
+2025-07-26 13:54:43.668 +05:30 [DBG] Hosting stopped

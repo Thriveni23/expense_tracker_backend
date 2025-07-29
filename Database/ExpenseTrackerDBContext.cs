@@ -20,6 +20,7 @@ namespace ExpenseTrackerCrudWebAPI.Database
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Source> Sources { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
     }
 }

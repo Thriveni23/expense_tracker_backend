@@ -1,16 +1,12 @@
 ﻿namespace ExpenseTrackerCrudWebAPI.DTOs
 {
-    public class RegisterDto
+    public record RegisterDto
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string PhoneNumber { get; set; }
-
-        public string Email { get; set; }
-        public string Password { get; set; }
-
-
-        public string Role { get; set; } = "User";
+        public string FirstName { get; init; }
+        public string LastName { get; init; }
+        public string PhoneNumber { get; init; }
+        public string Email { get; init; }
+        public string Password { get; init; }
+        public string Role { get; init; } = "User";
     }
-
 }
