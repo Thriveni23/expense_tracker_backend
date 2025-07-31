@@ -1,8 +1,10 @@
 using ExpenseTrackerCrudWebAPI.Database;
 using ExpenseTrackerCrudWebAPI.Models;
-using ExpenseTrackerCrudWebAPI.Exceptions;
 using ExpenseTrackerCrudWebAPI.Repositories;
 using ExpenseTrackerCrudWebAPI.Uow;
+using ExpenseTrackerCrudWebAPI.Filters;
+using ExpenseTrackerCrudWebAPI.Middleware;
+
 using ExpenseTrackerCrudWebAPI.Interfaces;
 using ExpenseTrackerCrudWebAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -10,6 +12,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using System.Text;
 using AutoWrapper;
 using Serilog;
@@ -76,7 +80,44 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddControllers(options =>
 {
-    options.Filters.Add<GlobalExceptionFilter>();
+    options.Filters.Add<ApiExceptionFilter>();
+});
+
+//Api Versioning
+
+
+builder.Services.AddApiVersioning(options =>
+
+
+{
+
+
+    options.DefaultApiVersion = new ApiVersion(1, 0); // Default version = v1.0
+
+
+    options.AssumeDefaultVersionWhenUnspecified = true;
+
+
+    options.ReportApiVersions = true; // Adds API-Supported and API-Depricated headers
+
+    // Choose one of these versioning strategies
+
+
+    options.ApiVersionReader = ApiVersionReader.Combine(
+
+
+        new QueryStringApiVersionReader("api-version"),            // /api/values?api-version=1.0
+
+
+        new HeaderApiVersionReader("X-Version"),                   // Custom header
+
+
+        new MediaTypeApiVersionReader("ver")                       // Accept: application/json; ver=1.0
+
+
+    );
+
+
 });
 
 
@@ -155,6 +196,8 @@ app.UseApiResponseAndExceptionWrapper();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.UseMiddleware<GlobalExceptionMiddleware>();
 
 app.UseAuthentication();
 

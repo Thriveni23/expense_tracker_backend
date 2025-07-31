@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ExpenseTrackerCrudWebAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0ed66c7912f28c0be4ac1cd5844757c76a3f9487")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5af5887da3562289b736dc63ba625cee032144c9")]
 [assembly: System.Reflection.AssemblyProductAttribute("ExpenseTrackerCrudWebAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ExpenseTrackerCrudWebAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

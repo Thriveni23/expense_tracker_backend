@@ -12,8 +12,8 @@ namespace ExpenseTrackerCrudWebAPI.Repositories
 { 
 public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
-	private readonly ExpenseTrackerDBContext _context;
-	private readonly DbSet<T> _dbSet;
+        protected readonly ExpenseTrackerDBContext _context;
+        private readonly DbSet<T> _dbSet;
 
 	public GenericRepository(ExpenseTrackerDBContext context)
 	{

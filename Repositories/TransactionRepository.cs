@@ -7,6 +7,10 @@ public class TransactionRepository : GenericRepository<Transaction>, ITransactio
 	public TransactionRepository(ExpenseTrackerDBContext context) : base(context)
 	{
 	}
+    public IQueryable<Transaction> GetQueryable()
+    {
+        return _context.Transactions.AsQueryable();
+    }
 
-	// Implement custom methods here if defined
+   
 }

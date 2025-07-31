@@ -1,16 +1,27 @@
 using System;
+using System.ComponentModel.DataAnnotations;
+using ExpenseTrackerCrudWebAPI.Attributes;
+
 
 namespace ExpenseTrackerCrudWebAPI.DTOs
 {
     public class TransactionDTO
     {
-        public int Id { get; set; }         // For update/response
+        public int Id { get; set; }      
+   
+        [BindAndRequired]
         public DateTime Date { get; set; }
+
+        [BindAndRequired]
         public string Description { get; set; }
+
+        [BindAndRequired]
         public decimal Amount { get; set; }
+
+        [BindAndRequired]
         public string Category { get; set; }
 
-        // Optional: Only if admin needs to see the user
+     
         public string? UserId { get; set; }
     }
 }

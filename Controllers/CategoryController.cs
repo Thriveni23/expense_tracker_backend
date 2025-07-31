@@ -8,8 +8,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace ExpenseTrackerCrudWebAPI.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+   
     [Authorize]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
@@ -22,6 +24,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpGet]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> GetCategories()
         {
             _logger.LogInformation("Fetching all categories");
@@ -38,6 +41,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpPost("add")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> AddCategory([FromBody] CategoryDTO categoryDto)
         {
             _logger.LogInformation("Adding new category: {CategoryType}", categoryDto.CategoryType);
@@ -54,6 +58,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
             _logger.LogInformation("Deleting category with ID: {CategoryId}", id);

@@ -1,4 +1,5 @@
 using ExpenseTrackerCrudWebAPI.DTOs;
+using ExpenseTrackerCrudWebAPI.Helpers;
 using ExpenseTrackerAPI.Models;
 using ExpenseTrackerCrudWebAPI.Database;
 using ExpenseTrackerCrudWebAPI.Interfaces;
@@ -36,21 +37,35 @@ namespace ExpenseTrackerCrudWebAPI.Services
             return transactionDto;
         }
 
-        public async Task<IEnumerable<TransactionDTO>> GetAllTransactionsAsync(string userId)
+        public async Task<PaginatedResult<TransactionDTO>> GetAllTransactionsAsync(string userId, PaginationParamsDto paginationParams)
         {
-            var transactions = await _unitOfWork.Transactions.GetAllAsync();
-            return transactions
-                .Where(t => t.UserId == userId)
-                .Select(t => new TransactionDTO
-                {
-                    Id = t.Id,
-                    Date = t.Date,
-                    Description = t.Description,
-                    Amount = t.Amount,
-                    Category = t.Category,
-                    UserId = t.UserId
-                });
+            // Get filtered query
+            var query = _unitOfWork.Transactions.GetQueryable().Where(t => t.UserId == userId);
+
+            // Total count for pagination
+            var totalCount = await query.CountAsync();
+
+            // Apply pagination
+            var transactions = await query
+                .Skip((paginationParams.PageNumber - 1) * paginationParams.PageSize)
+                .Take(paginationParams.PageSize)
+                .ToListAsync();
+
+            // Map to DTOs
+            var transactionDtos = transactions.Select(t => new TransactionDTO
+            {
+                Id = t.Id,
+                Date = t.Date,
+                Description = t.Description,
+                Amount = t.Amount,
+                Category = t.Category,
+                UserId = t.UserId
+            }).ToList();
+
+            // Return paginated result
+            return new PaginatedResult<TransactionDTO>(transactionDtos, totalCount, paginationParams.PageNumber, paginationParams.PageSize);
         }
+
 
         public async Task<TransactionDTO?> GetTransactionByIdAsync(int id, string userId)
         {

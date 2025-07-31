@@ -7,9 +7,11 @@ using System.Security.Claims;
 
 namespace ExpenseTrackerCrudWebAPI.Controllers
 {
-    [Route("api/[controller]")]
+   
     [ApiController]
     [Authorize]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class BudgetController : ControllerBase
     {
         private readonly IBudgetService _budgetService;
@@ -25,6 +27,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
             User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
         [HttpPost]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> CreateBudget([FromBody] BudgetDTO budgetDto)
         {
             var userId = GetUserId();
@@ -44,6 +47,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpGet]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> GetAllBudgets()
         {
             var userId = GetUserId();
@@ -61,6 +65,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpGet("current-summary")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> GetCurrentMonthBudgetSummary()
         {
             var userId = GetUserId();

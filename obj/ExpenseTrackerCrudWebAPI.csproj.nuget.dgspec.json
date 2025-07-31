@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\OneDrive - H&R BLOCK LTD\\Desktop\\ExpenseTracker\\expense_tracker_backend\\ExpenseTrackerCrudWebAPI.csproj": {}
+    "C:\\Pre_joining\\backend\\expense_tracker_backend\\ExpenseTrackerCrudWebAPI.csproj": {}
   },
   "projects": {
-    "C:\\OneDrive - H&R BLOCK LTD\\Desktop\\ExpenseTracker\\expense_tracker_backend\\ExpenseTrackerCrudWebAPI.csproj": {
+    "C:\\Pre_joining\\backend\\expense_tracker_backend\\ExpenseTrackerCrudWebAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\OneDrive - H&R BLOCK LTD\\Desktop\\ExpenseTracker\\expense_tracker_backend\\ExpenseTrackerCrudWebAPI.csproj",
+        "projectUniqueName": "C:\\Pre_joining\\backend\\expense_tracker_backend\\ExpenseTrackerCrudWebAPI.csproj",
         "projectName": "ExpenseTrackerCrudWebAPI",
-        "projectPath": "C:\\OneDrive - H&R BLOCK LTD\\Desktop\\ExpenseTracker\\expense_tracker_backend\\ExpenseTrackerCrudWebAPI.csproj",
+        "projectPath": "C:\\Pre_joining\\backend\\expense_tracker_backend\\ExpenseTrackerCrudWebAPI.csproj",
         "packagesPath": "C:\\Users\\a2832850\\.nuget\\packages\\",
-        "outputPath": "C:\\OneDrive - H&R BLOCK LTD\\Desktop\\ExpenseTracker\\expense_tracker_backend\\obj\\",
+        "outputPath": "C:\\Pre_joining\\backend\\expense_tracker_backend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -70,6 +70,10 @@
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.16, )"
+            },
+            "Microsoft.AspNetCore.Mvc.Versioning": {
+              "target": "Package",
+              "version": "[5.1.0, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",

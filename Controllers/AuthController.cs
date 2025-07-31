@@ -7,8 +7,10 @@ using System.Security.Claims;
 
 namespace ExpenseTrackerCrudWebAPI.Controllers
 {
-    [Route("api/[controller]")]
+   
     [ApiController]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
@@ -22,6 +24,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
 
 
         [HttpPost("register")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> Register(RegisterDto dto)
         {
             _logger.LogInformation("Registration attempt for email:{Email} with role:{Role}",dto.Email,dto.Role);
@@ -37,6 +40,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpPost("login")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> Login(LoginDto dto)
         {
             _logger.LogInformation("Login attempt for user: {Email}", dto.Email);
@@ -59,6 +63,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
 
         [Authorize]
         [HttpPost("ChangePassword")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> ChangePassword(ChangePasswordDTO dto)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -79,6 +84,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpPost("refresh-token")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequestDto dto)
         {
             var result = await _authService.RefreshTokenAsync(dto);
@@ -91,6 +97,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
 
         [Authorize]
         [HttpDelete("DeleteAccount")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> DeleteAccount()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;

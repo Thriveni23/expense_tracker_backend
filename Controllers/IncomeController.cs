@@ -10,9 +10,11 @@ using AutoWrapper.Wrappers;
 
 namespace ExpenseTrackerCrudWebAPI.Controllers
 {
-    [Route("api/[controller]")]
+   
     [ApiController]
     [Authorize]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class IncomesController : ControllerBase
     {
         private readonly IIncomeService _incomeService;
@@ -27,6 +29,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         private string? GetUserId() => User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
         [HttpPost]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> CreateIncome([FromBody] IncomeDTO incomeDto)
         {
             var userId = GetUserId();
@@ -45,6 +48,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpGet]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> GetAllIncomes()
         {
             var userId = GetUserId();
@@ -53,6 +57,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpGet("{id}")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> GetIncomeById(int id)
         {
             var result = await _incomeService.GetIncomeByIdAsync(id);
@@ -61,6 +66,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpPut("{id}")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> UpdateIncome(int id, [FromBody] IncomeDTO incomeDto)
         {
             var userId = GetUserId();
@@ -70,6 +76,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> DeleteIncome(int id)
         {
             var userId = GetUserId();
