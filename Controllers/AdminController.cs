@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace ExpenseTrackerCrudWebAPI.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    
     [Authorize(Roles = "Admin")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class AdminController : ControllerBase
     {
         private readonly IAdminService _adminService;
@@ -21,6 +23,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpGet("all-incomes")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> GetAllIncomes()
         {
             try
@@ -36,6 +39,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpGet("all-savings")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> GetAllSavings()
         {
             try
@@ -51,6 +55,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpGet("all-budgets")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> GetAllBudgets()
         {
             try
@@ -66,6 +71,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpGet("all-transactions")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> GetAllTransactions()
         {
             try
@@ -81,6 +87,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpGet("all-users")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> GetAllUsers()
         {
             try
@@ -96,6 +103,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpDelete("delete-user/{id}")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> DeleteUserById(string id)
         {
             try

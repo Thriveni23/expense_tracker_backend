@@ -7,9 +7,11 @@ using System.Security.Claims;
 
 namespace ExpenseTrackerCrudWebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    
     [ApiController]
     [Authorize]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class SavingGoalsController : ControllerBase
     {
         private readonly ISavingGoalsService _savingGoalsService;
@@ -25,6 +27,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
             User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
         [HttpPost]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> CreateGoal([FromBody] SavingGoalDTO goalDto)
         {
             var userId = GetUserId();
@@ -44,6 +47,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpGet]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> GetAllGoals()
         {
             var userId = GetUserId();
@@ -63,6 +67,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpGet("{id}")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> GetGoalById(int id)
         {
             _logger.LogInformation("Fetching saving goal with ID {GoalId}", id);
@@ -84,6 +89,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpPut("{id}")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> UpdateGoal(int id, [FromBody] SavingGoalDTO updatedGoal)
         {
             if (id != updatedGoal.Id)
@@ -108,6 +114,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpPut("addtosavings/{id}")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> AddToSavings(int id, [FromBody] decimal amount)
         {
             if (amount <= 0)
@@ -132,6 +139,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> DeleteGoal(int id)
         {
             var userId = GetUserId();

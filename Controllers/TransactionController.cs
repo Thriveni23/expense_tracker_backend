@@ -1,16 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
+﻿using AutoMapper;
 using ExpenseTrackerCrudWebAPI.DTOs;
 using ExpenseTrackerCrudWebAPI.Interfaces;
 using ExpenseTrackerCrudWebAPI.Services;
-using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace ExpenseTrackerCrudWebAPI.Controllers
 {
-    [Route("api/[controller]")]
+  
     [ApiController]
     [Authorize]
+    [ApiVersion("1.0")] 
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class TransactionsController : ControllerBase
     {
         private readonly ITransactionService _transactionService;
@@ -23,6 +27,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpPost]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> CreateTransaction([FromBody] TransactionDTO transactionDto)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value!;
@@ -48,13 +53,15 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllTransactions()
+        [MapToApiVersion("1.0")]
+        public async Task<IActionResult> GetAllTransactions([FromQuery] PaginationParamsDto paginationParams)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value!;
+
             try
             {
-                var transactions = await _transactionService.GetAllTransactionsAsync(userId);
-                return Ok(transactions); // Already a list of DTOs
+                var paginatedResult = await _transactionService.GetAllTransactionsAsync(userId, paginationParams);
+                return Ok(paginatedResult);
             }
             catch (Exception ex)
             {
@@ -63,7 +70,9 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
             }
         }
 
+
         [HttpGet("{id}")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> GetTransactionById(int id)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value!;
@@ -82,6 +91,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpPut("{id}")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> UpdateTransaction(int id, [FromBody] TransactionDTO transactionDto)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value!;
@@ -100,6 +110,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> DeleteTransaction(int id)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value!;

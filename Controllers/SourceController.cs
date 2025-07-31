@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace ExpenseTrackerCrudWebAPI.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+   
     [Authorize]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class SourceController : ControllerBase
     {
         private readonly ISourceService _sourceService;
@@ -21,6 +23,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpGet]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> GetSources()
         {
             _logger.LogInformation("Fetching all sources");
@@ -37,6 +40,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpPost("add")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> AddSource([FromBody] SourceDTO sourceDto)
         {
             _logger.LogInformation("Adding new source: {SourceType}", sourceDto.SourceType);
@@ -53,6 +57,7 @@ namespace ExpenseTrackerCrudWebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> DeleteSource(int id)
         {
             _logger.LogInformation("Deleting source with ID: {SourceId}", id);
